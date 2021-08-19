@@ -1,6 +1,7 @@
 import { div } from 'prelude-ls';
 import React, { Component } from 'react';
 import { Card, CardImg, CardBody, CardTitle, CardText, CardImgOverlay } from 'reactstrap';
+import DishDetail from './DishdetailComponent';
 
 //Adding a new component
 class Menu extends Component {
@@ -12,35 +13,41 @@ class Menu extends Component {
             selectedDish: null,
         }
 
+        // BINDING YOUR FUNCTION
+        // this.onDishSelect = this.onDishSelect.bind(this);
     }
+
     //By this we change the state
-    onDishSelect(dish) {
+    // onDishSelect(dish) {
+    //     this.setState({ selectedDish: dish });
+    // }
+    onDishSelect = (dish) => {
         this.setState({ selectedDish: dish });
-    }
-
-    // This function render the selected dish
-    renderDish(dish){
-        if(dish != null){
-            return (
-                //Using card instead of media to show the dishes
-                <Card>
-                    <CardImg width="100%" src={dish.image} alt ={dish.name} />
-                    <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>
-                </Card>
-            )
-
         }
 
-        else
-        {
-            return(
-                <div></div>
-            )
-        }
-    }
+    // // This function render the selected dish
+    // renderDish(dish){
+    //     if(dish != null){
+    //         return (
+    //             //Using card instead of media to show the dishes
+    //             <Card>
+    //                 <CardImg width="100%" src={dish.image} alt ={dish.name} />
+    //                 <CardBody>
+    //                     <CardTitle>{dish.name}</CardTitle>
+    //                     <CardText>{dish.description}</CardText>
+    //                 </CardBody>
+    //             </Card>
+    //         )
+
+    //     }
+
+    //     else
+    //     {
+    //         return(
+    //             <div></div>
+    //         )
+    //     }
+    // }
 
 
     render() {
@@ -64,7 +71,7 @@ class Menu extends Component {
                 {/* This will render the dish on which we have clicked  */}
                 <div className="row">
                     <div className="col-12 ml-1">
-                        {this.renderDish(this.state.selectedDish)}
+                    <DishDetail dish={this.state.selectedDish} /> 
                     </div>
                 </div>
             </div>
