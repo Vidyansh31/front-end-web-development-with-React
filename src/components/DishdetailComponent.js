@@ -7,6 +7,7 @@ import {
 } from "reactstrap";
 
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import {Loading} from './LoadingComponent';
 
 
 
@@ -90,8 +91,6 @@ class CommentForm extends Component {
                                     />
                                 </Col>
                             </Row>
-
-
                             {/* author */}
                             <Row className="form-group">
                                 <Label htmlFor="author" md={12}> Your Name </Label>
@@ -115,10 +114,6 @@ class CommentForm extends Component {
                                     />
                                 </Col>
                             </Row>
-
-
-
-
                             {/* comment */}
                             <Row className="form-group">
                                 <Label htmlFor="comment" md={12}>Comment</Label>
@@ -226,40 +221,56 @@ class CommentForm extends Component {
 
 
     const DishDetail = (props) => {
-
         const dish = props.dish
-
-
-        if (dish == null) {
-            return (<div></div>);
-        }
-
-        return (
-            <div className="container">
-                <div className="row">
-                    <Breadcrumb>
-                        <BreadcrumbItem>
-                            <Link to="/menu">Menu</Link>
-                        </BreadcrumbItem>
-                        <BreadcrumbItem active>
-                            { props.dish.name }
-                        </BreadcrumbItem>
-                    </Breadcrumb>
-
-                    <div className="col-12">
-                        <h3>Menu</h3>
-                        <hr />
+        if(props.isLoading){
+            return(
+                <div className="container align-self-center">
+                    <div className="row">
+                        <Loading />
                     </div>
                 </div>
-
-                <div className='row'>
-                    <RenderDish dish={ props.dish } />
-                    <RenderComments dishId={props.dish.id} comments={ props.comments } addComment={ props.addComment } />
+            )
+        }
+        else if(props.ErrMess){
+            return(
+                <div className="container">
+                    <div className="row">            
+                        <h4>{props.errMess}</h4>
+                    </div>
                 </div>
-
-
-            </div>
-        )
+            );
+        }
+        else if(props.dish != null){
+            return (
+                <div className="container">
+                    <div className="row">
+                        <Breadcrumb>
+                            <BreadcrumbItem>
+                                <Link to="/menu">Menu</Link>
+                            </BreadcrumbItem>
+                            <BreadcrumbItem active>
+                                { props.dish.name }
+                            </BreadcrumbItem>
+                        </Breadcrumb>
+    
+                        <div className="col-12">
+                            <h3>Menu</h3>
+                            <hr />
+                        </div>
+                    </div>
+    
+                    <div className='row'>
+                        <RenderDish dish={ props.dish } />
+                        <RenderComments dishId={props.dish.id} comments={ props.comments } addComment={ props.addComment } />
+                    </div>
+    
+                </div>
+            )
+        }
+      
+        else{
+            return (<div></div>);
+        }
     }
 
 
